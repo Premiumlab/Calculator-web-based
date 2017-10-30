@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 var amazingInlineJsStyle = {
@@ -15,16 +14,17 @@ class RootContainer extends Component {
   }
 
   componentDidMount() {
-    var self = this;
-    axios.get('/api/example')
-    .then(function (response) {
-      console.log(response.data);
-      self.setState({message: response.data.message});  /*this will cause an invoke of the render() function again */
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    fetch('/api/example')
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        this.setState({message: json.message});  /*this will cause an invoke of the render() function again */
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+
   /* Every time we change the value of a state variable, the render() function is called. That's why we need to make sure in the render() of
   the Root class below that we received the prop 'messageFromServer' (see the if-else condition in the Root class)*/
   render() {
@@ -32,14 +32,14 @@ class RootContainer extends Component {
       <Root messageFromServer={this.state.message} />
     );
   }
+
 }
 
 class Root extends Component {
 
   render() {
     console.log("this will print twice");
-    if(this.props.messageFromServer)
-    {
+    if (this.props.messageFromServer) {
       return (
           <div className="Root">
             <p>
@@ -50,8 +50,7 @@ class Root extends Component {
               Root! <Link to={`/foo`}>a link to foo</Link>
             </p>
           </div>);
-    }
-    else {
+    } else {
       return null;
     }
 
