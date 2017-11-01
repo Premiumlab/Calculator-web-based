@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET example. */
 router.get('/example', function(req, res, next) {
   var foo = {
-    message: 'hello from express!'
+    message: 'hello from express! I am express.'
   }
   console.log();
   res.send(foo);

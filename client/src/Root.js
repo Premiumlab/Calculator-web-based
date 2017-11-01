@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-var amazingInlineJsStyle = {
-  border: '1px solid purple',
+var Style = {
+  border: '1px solid blue',
   padding: '10px',
-  backgroundColor: '#ffffcc'
+  backgroundColor: '#ffffcd'
 }
 
 class RootContainer extends Component {
@@ -29,10 +29,52 @@ class RootContainer extends Component {
   the Root class below that we received the prop 'messageFromServer' (see the if-else condition in the Root class)*/
   render() {
     return (
-      <Root messageFromServer={this.state.message} />
+      //<Root messageFromServer={this.state.message} />
+      <Movielist />
     );
   }
 
+}
+
+class Movielist extends Component {
+
+  constructor() {
+    super();
+    this.state = {movies: [] }
+  }
+
+  componentDidMount() {
+    fetch('/api/movies')
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        this.setState({movies: json.movieList});  /*this will cause an invoke of the render() function again */
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
+  render() {
+    const movielist = this.state.movies.map((movies) =>
+      <div className="box">
+        <artical className="media">
+          <div className="media-content">
+            <div className="content">
+              <h1>{movies.title}</h1>
+              <li>Realease Year: {movies.releaseYear}</li>
+              <li>Average Rating: {movies.avgRating}</li>
+              <li><Link to={'/movies/' + movies.movieId}> Click for more</Link></li>
+            </div>
+          </div>
+        </artical>
+      </div>
+  );
+  return (
+    <ul>{movielist}</ul>
+  );
+  }
 }
 
 class Root extends Component {
@@ -44,7 +86,7 @@ class Root extends Component {
           <div className="Root">
             <p>
               Message from server:
-              <span style={amazingInlineJsStyle}>{this.props.messageFromServer}</span>
+              <span style={Style}>{this.props.messageFromServer}</span>
             </p>
             <p>
               Root! <Link to={`/foo`}>a link to foo</Link>
@@ -56,5 +98,6 @@ class Root extends Component {
 
   }
 }
+
 
 export default RootContainer;
