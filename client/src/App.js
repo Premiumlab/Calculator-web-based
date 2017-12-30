@@ -7,14 +7,15 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to movie site</h1>
+          <h1 className="App-title">Welcome to calculator site</h1>
         </header>
         <p className="App-intro">
-          Here is a list of movies.
+          Start calculation here.
         </p>
       </div>
     );
   }
 }
+
 
 export default App;

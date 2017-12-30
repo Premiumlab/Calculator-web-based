@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import { Route,BrowserRouter, Switch } from 'react-router-dom';
 
-import Root from './Root'
-import Foo from './Foo'
-import Movies from './Movies'
+import Root from './Root';
+import Foo from './Foo';
+import Calculator from './Calc';
 
 ReactDOM.render(
   <div>
@@ -15,8 +15,10 @@ ReactDOM.render(
       <Switch>
         <Route exact path='/' component={Root}/>
         <Route path='/foo' component={Foo}/>
-        <Route path='/movies/:movieId' component={Movies}/>
       </Switch>
     </BrowserRouter>
+    <div>
+      <Calculator />
+    </div>
   </div>,
   document.getElementById('root'));
